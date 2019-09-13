@@ -1,0 +1,6 @@
+framework module Pods_Meli_Poc {
+  umbrella header "Pods-Meli-Poc-umbrella.h"
+
+  export *
+  module * { export * }
+}

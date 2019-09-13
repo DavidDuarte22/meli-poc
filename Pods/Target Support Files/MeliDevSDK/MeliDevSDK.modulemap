@@ -1,0 +1,6 @@
+framework module MeliDevSDK {
+  umbrella header "MeliDevSDK-umbrella.h"
+
+  export *
+  module * { export * }
+}

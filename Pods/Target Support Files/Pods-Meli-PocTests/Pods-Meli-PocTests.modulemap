@@ -1,0 +1,6 @@
+framework module Pods_Meli_PocTests {
+  umbrella header "Pods-Meli-PocTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
