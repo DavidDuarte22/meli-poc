@@ -10,6 +10,11 @@ import Foundation
 import RxSwift
 import networkLayer
 
+protocol ResultPresenterInterface {
+    func getProductDetail(productId: String)
+    func showProductDetail(product: ProductDetail)
+}
+
 class ResultPresenter {
     var presenterToViewProductDetailSubject = PublishSubject<ProductDetail>()
     
@@ -21,7 +26,9 @@ class ResultPresenter {
     init() {
         subscribeToObserver(self.resultInteractor.interactorToPresenterProductDetailSubject)
     }
-    
+}
+
+extension ResultPresenter {
     func getProductDetail(productId: String) {
         resultInteractor.fetchProductDetail(productId: productId)
     }

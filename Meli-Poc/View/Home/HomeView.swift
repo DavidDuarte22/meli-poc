@@ -43,7 +43,7 @@ class HomeView: UITableViewController {
             
         }
         // cuando se vuelve a esta vista recargar historial
-        homePresenter.retrieveRecentSearches()
+        homePresenter.getRecentSearches()
     }
     
     // MARK: TableView Functions
@@ -93,7 +93,7 @@ class HomeView: UITableViewController {
         guard let searchedText = searchedProducts[indexPath.row].title else { return }
         // observer para productos
         subscribeToObserver(self.homePresenter.presenterToViewProductFromApiSubject)
-        self.homePresenter.searchProduct(product: searchedText)
+        self.homePresenter.searchProducts(product: searchedText)
         addChild(spinner)
         spinner.view.frame = view.frame
         view.addSubview(spinner.view)
@@ -158,7 +158,7 @@ extension HomeView: UISearchBarDelegate {
             // observer para productos
             subscribeToObserver(self.homePresenter.presenterToViewProductFromApiSubject)
             searchBar.resignFirstResponder()
-            self.homePresenter.searchProduct(product: searchBarText)
+            self.homePresenter.searchProducts(product: searchBarText)
             addChild(spinner)
             spinner.view.frame = view.frame
             view.addSubview(spinner.view)

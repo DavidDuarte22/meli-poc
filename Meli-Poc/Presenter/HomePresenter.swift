@@ -9,12 +9,10 @@
 import Foundation
 import UIKit
 import RxSwift
-import networkLayer
-import SystemConfiguration
 
 protocol HomePresenterProtocol {
     func getRecentSearches()
-    func getProduct(product: String, siteId: String)
+    func searchProducts(product: String, siteId: String)
 }
 
 class HomePresenter {
@@ -27,21 +25,23 @@ class HomePresenter {
     private let homeInteractor = HomeInteractor()
     private let homeRouter = HomeRouter.shared
     
-    var navigationController: UINavigationController!
-    
     init() {
         subscribeToObserver(self.homeInteractor.interactorToPresenterSearchedProductSubject)
         subscribeToObserver(self.homeInteractor.interactorToPresenterProductFromApiSubject)
-        subscribeToObserver(self.homeInteractor.interactorToPresenterErrorSubject)
     }
-    // MARK: Retrieve from CoreData
-    func retrieveRecentSearches() {
+
+}
+
+extension HomePresenter: HomePresenterProtocol {
+    func getRecentSearches() {
         self.homeInteractor.fetchRecentSearches()
     }
-    // MARK: Search
-    func searchProduct(product: String, siteId: String = "MLA") {
+    
+    func searchProducts(product: String, siteId: String = "MLA") {
         self.homeInteractor.fetchProductFromApi(productForSearch: product, siteId: siteId)
     }
+    
+    
 }
 
 extension HomePresenter {
@@ -53,13 +53,6 @@ extension HomePresenter {
         },
             onError: {(error) in
                 self.presenterToViewSearchedProductSubject.onError(error)
-                self.homeRouter.navigateToErrorView(error: error)
-        }).disposed(by: disposeBag)
-    }
-    
-    func subscribeToObserver (_ subject: PublishSubject<Error>) {
-        subject.subscribe(
-            onNext: {(error) in
                 self.homeRouter.navigateToErrorView(error: error)
         }).disposed(by: disposeBag)
     }
