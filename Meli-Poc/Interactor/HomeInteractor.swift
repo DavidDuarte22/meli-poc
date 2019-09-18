@@ -15,14 +15,16 @@ import SystemConfiguration
 protocol HomeInteractorInterface {
     func fetchRecentSearches()
     func fetchProductFromApi(productForSearch product: String, siteId: String)
+    var interactorToPresenterSearchedProductSubject: PublishSubject <[ProductSearched]> { get set }
+    var interactorToPresenterProductFromApiSubject: PublishSubject<ProductResult> { get set }
+    
 }
 
 class HomeInteractor {
     private var meliAPIURL: String = ""
     private let httpClient = HttpClient.shared
     
-    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var dataManager = LocalStorageManager()
     
     var searchedProducts: [ProductSearched]?
     
@@ -52,9 +54,8 @@ class HomeInteractor {
 extension HomeInteractor: HomeInteractorInterface {
     func fetchRecentSearches() {
         do {
-            let search: [ProductSearched] = try context.fetch(ProductSearched.fetchRequest())
-            self.searchedProducts = search
-            self.interactorToPresenterSearchedProductSubject.onNext(search)
+            try self.searchedProducts = dataManager.fetchRecentSearches()
+            self.interactorToPresenterSearchedProductSubject.onNext(self.searchedProducts ?? [])
         } catch let error as NSError {
             print("Couldn't fetch. \(error), \(error.userInfo)")
             self.interactorToPresenterSearchedProductSubject.onError(error)
@@ -75,9 +76,7 @@ extension HomeInteractor: HomeInteractorInterface {
                 if self.searchedProducts != nil {
                     let results = self.searchedProducts!.filter { $0.title == product }
                     if results.isEmpty {
-                        let productSearched = ProductSearched(entity: ProductSearched.entity(), insertInto: self.context)
-                        productSearched.title = product
-                        self.appDelegate.saveContext()
+                        self.dataManager.addSearchedProduct(product: product)
                     }
                 }
                 // lanzar evento para acrtualizar la view

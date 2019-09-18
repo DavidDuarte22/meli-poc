@@ -10,9 +10,11 @@ import Foundation
 import UIKit
 import RxSwift
 
-protocol HomePresenterProtocol {
+protocol HomePresenterInterface {
     func getRecentSearches()
     func searchProducts(product: String, siteId: String)
+    var presenterToViewProductFromApiSubject: PublishSubject<ProductResult> { get set }
+    var presenterToViewSearchedProductSubject: PublishSubject<[ProductSearched]> { get set }
 }
 
 class HomePresenter {
@@ -22,8 +24,8 @@ class HomePresenter {
     // disposeBag for RxSwift
     let disposeBag = DisposeBag()
     
-    private let homeInteractor = HomeInteractor()
-    private let homeRouter = HomeRouter.shared
+    private let homeInteractor: HomeInteractorInterface = HomeInteractor()
+    private let homeRouter: HomeRouterInterface = HomeRouter.shared
     
     init() {
         subscribeToObserver(self.homeInteractor.interactorToPresenterSearchedProductSubject)
@@ -32,7 +34,7 @@ class HomePresenter {
 
 }
 
-extension HomePresenter: HomePresenterProtocol {
+extension HomePresenter: HomePresenterInterface {
     func getRecentSearches() {
         self.homeInteractor.fetchRecentSearches()
     }

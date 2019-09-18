@@ -18,8 +18,6 @@ class HomeView: UITableViewController {
     let searchBar: UISearchBar = UISearchBar()
     var searchedProducts: [ProductSearched] = []
     var haveSearched: Bool = false
-    var errorHappened = false
-    
     
     let spinner = SpinnerViewController()
 
@@ -31,6 +29,8 @@ class HomeView: UITableViewController {
         
         // observer para productos buscados: Historial
         subscribeToObserver(self.homePresenter.presenterToViewSearchedProductSubject)
+        // observer para productos
+        subscribeToObserver(self.homePresenter.presenterToViewProductFromApiSubject)
         
         customizeSearchBar()
     }
@@ -38,16 +38,13 @@ class HomeView: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        if errorHappened {
-            reloadInputViews()
-            
-        }
         // cuando se vuelve a esta vista recargar historial
         homePresenter.getRecentSearches()
     }
     
     // MARK: TableView Functions
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        self.tableView.restore()
         if self.searchedProducts.count == 0 {
             if !haveSearched {
                 tableView.setEmptyView(title: "Please, make a search :D", message: "")
@@ -126,6 +123,7 @@ extension HomeView {
         .subscribe(
             onNext: {(result) in
                 self.spinner.removeSpinner()
+                self.searchBar.text = ""
         },
             onError: {(error) in
                 self.spinner.removeSpinner()
@@ -155,8 +153,6 @@ extension HomeView: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let searchBarText = searchBar.text {
             self.haveSearched = true
-            // observer para productos
-            subscribeToObserver(self.homePresenter.presenterToViewProductFromApiSubject)
             searchBar.resignFirstResponder()
             self.homePresenter.searchProducts(product: searchBarText)
             addChild(spinner)

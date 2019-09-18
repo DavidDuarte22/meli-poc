@@ -13,13 +13,14 @@ import networkLayer
 protocol ResultInteractorInterface {
     func fetchProductDetail(productId: String)
     func navigateToProductDetail(product: ProductDetail)
+    var interactorToPresenterProductDetailSubject: PublishSubject<ProductDetail> { get set }
 }
 
 class ResultInteractor {
     private var meliAPIURL: String = ""
     var interactorToPresenterProductDetailSubject = PublishSubject<ProductDetail>()
-    let httpClient = HttpClient.shared
-    let homeRouter = HomeRouter.shared
+    private let httpClient = HttpClient.shared
+    private let homeRouter = HomeRouter.shared
     
     init() {
         self.meliAPIURL = Bundle.main.infoDictionary?["MELI_API_ENDPOINT"] as! String
