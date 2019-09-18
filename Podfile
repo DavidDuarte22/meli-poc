@@ -7,6 +7,7 @@ target 'Meli-Poc' do
   use_frameworks!
   pod 'RxSwift', '4.4.2'
   pod 'networkLayer', '~> 0.1.2'
+  pod 'ReachabilitySwift', '~> 4.3.1'
   # Pods for Meli-Poc
 
   target 'Meli-PocTests' do

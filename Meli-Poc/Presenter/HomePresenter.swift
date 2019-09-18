@@ -10,66 +10,80 @@ import Foundation
 import UIKit
 import RxSwift
 import networkLayer
+import SystemConfiguration
+
+protocol HomePresenterProtocol {
+    func getRecentSearches()
+    func getProduct(product: String, siteId: String)
+}
 
 class HomePresenter {
     
-    private var meliAPIURL: String = ""
-    var presenterProductSubject = PublishSubject<ProductResult>()
-    var presenterSearchedProductArraySubject = PublishSubject<[ProductSearched]>()
-    let httpClient = HttpClient.shared
+    var presenterToViewProductFromApiSubject = PublishSubject<ProductResult>()
+    var presenterToViewSearchedProductSubject = PublishSubject<[ProductSearched]>()
+    // disposeBag for RxSwift
+    let disposeBag = DisposeBag()
     
-    private let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    var searchedProducts: [ProductSearched]?
+    private let homeInteractor = HomeInteractor()
+    private let homeRouter = HomeRouter.shared
+    
+    var navigationController: UINavigationController!
     
     init() {
-        self.meliAPIURL = Bundle.main.infoDictionary?["MELI_API_ENDPOINT"] as! String
+        subscribeToObserver(self.homeInteractor.interactorToPresenterSearchedProductSubject)
+        subscribeToObserver(self.homeInteractor.interactorToPresenterProductFromApiSubject)
+        subscribeToObserver(self.homeInteractor.interactorToPresenterErrorSubject)
     }
-    
     // MARK: Retrieve from CoreData
     func retrieveRecentSearches() {
-        do {
-            let search: [ProductSearched] = try context.fetch(ProductSearched.fetchRequest())
-            self.searchedProducts = search
-            self.presenterSearchedProductArraySubject.onNext(search)
-        } catch let error as NSError {
-            print("Couldn't fetch. \(error), \(error.userInfo)")
-            self.presenterSearchedProductArraySubject.onError(error)
-        }
+        self.homeInteractor.fetchRecentSearches()
     }
     // MARK: Search
     func searchProduct(product: String, siteId: String = "MLA") {
-        let searchText = prepareString(searchString: product)
-        httpClient.callGet(
-            serviceUrl: "\(meliAPIURL)/sites/\(siteId)/search?q=\(searchText)",
-            success: { (arrayResult: ProductResult, response: HttpResponse?) in
-                // save in CoreData the product searched if it isn't
-                if self.searchedProducts != nil {
-                    let results = self.searchedProducts!.filter { $0.title == product }
-                    if results.isEmpty {
-                        let productSearched = ProductSearched(entity: ProductSearched.entity(), insertInto: self.context)
-                        productSearched.title = product
-                        self.appDelegate.saveContext()
-                    }
-                }
-                // lanzar evento para acrtualizar la view
-                self.presenterProductSubject.onNext(arrayResult)
-        },
-            failure: { (error: Error, response: HttpResponse?) in
-                self.presenterProductSubject.onError(error)
-        })
-    }
-    // Navigate to ResultsTable with results of search
-    func showSearchedResults(products: [Product], title: String, navigationController: UINavigationController) {
-        navigationController.pushViewController(ResultsTableView(results: products, query: title), animated: false)
+        self.homeInteractor.fetchProductFromApi(productForSearch: product, siteId: siteId)
     }
 }
 
 extension HomePresenter {
-    // trim and replace whitespace in string inserted by user
-    func prepareString(searchString: String) -> String {
-        var polishedString = searchString.trimmingCharacters(in: .whitespacesAndNewlines)
-        polishedString = polishedString.replacingOccurrences(of: " ", with: "+")
-        return polishedString
+    func subscribeToObserver (_ subject: PublishSubject<[ProductSearched]>) {
+        subject.subscribe(
+            onNext: {(arraySearchedProducts) in
+                self.presenterToViewSearchedProductSubject.onNext(arraySearchedProducts)
+                
+        },
+            onError: {(error) in
+                self.presenterToViewSearchedProductSubject.onError(error)
+                self.homeRouter.navigateToErrorView(error: error)
+        }).disposed(by: disposeBag)
+    }
+    
+    func subscribeToObserver (_ subject: PublishSubject<Error>) {
+        subject.subscribe(
+            onNext: {(error) in
+                self.homeRouter.navigateToErrorView(error: error)
+        }).disposed(by: disposeBag)
+    }
+    
+    func subscribeToObserver (_ subject: PublishSubject<ProductResult>) {
+        subject.materialize()
+            .subscribe(
+                onNext: {(result) in
+                    if let results = result.element {
+                        self.presenterToViewProductFromApiSubject.onNext(results)
+                        self.homeRouter.navigateToSearchedResults(products: results.results, title: results.query)
+                    } else {
+                        if let error = result.error {
+                            self.homeRouter.navigateToErrorView(error: error)
+                        }
+                    }
+            },
+                onError: {(error) in
+                    self.homeRouter.navigateToErrorView(error: error)
+            },
+                onCompleted: {() in
+                    print("complete")
+            }).disposed(by: disposeBag)
     }
 }
+
+

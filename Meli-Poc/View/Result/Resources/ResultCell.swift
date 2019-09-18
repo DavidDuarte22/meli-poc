@@ -23,7 +23,7 @@ class ResultCell: UITableViewCell {
         super.layoutIfNeeded()
         
         if let productURLImage = productURLImage {
-            self.productImageView.image = UIImage(named: "EmptyImage")
+            self.productImageView.image = UIImage(named: "empty_image")
             let queue = OperationQueue()
             queue.addOperation {() -> Void in
                 do {

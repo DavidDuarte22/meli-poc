@@ -10,14 +10,16 @@ import UIKit
 import RxSwift
 
 class HomeView: UITableViewController {
-    
+    // instances of presenter
     var homePresenter = HomePresenter()
-    
+    // disposeBag for RxSwift
     let disposeBag = DisposeBag()
-    
-    let searchBar:UISearchBar = UISearchBar()
+    // const and instances for searching flow
+    let searchBar: UISearchBar = UISearchBar()
     var searchedProducts: [ProductSearched] = []
     var haveSearched: Bool = false
+    var errorHappened = false
+    
     
     let spinner = SpinnerViewController()
 
@@ -25,61 +27,23 @@ class HomeView: UITableViewController {
         super.viewDidLoad()
         self.tableView.register(UINib(nibName: "SearchedProductsView", bundle: nil), forCellReuseIdentifier: "searchedProductCell")
         self.tableView.register(UINib(nibName: "SearchedHeaderView", bundle: nil), forCellReuseIdentifier: "searchedHeaderCell")
-        // observer para productos
-        subscribeToObserver(self.homePresenter.presenterProductSubject)
+        
+        
         // observer para productos buscados: Historial
-        subscribeToObserver(self.homePresenter.presenterSearchedProductArraySubject)
+        subscribeToObserver(self.homePresenter.presenterToViewSearchedProductSubject)
+        
         customizeSearchBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        if errorHappened {
+            reloadInputViews()
+            
+        }
         // cuando se vuelve a esta vista recargar historial
         homePresenter.retrieveRecentSearches()
-    }
-    
-    // se agrega la barra de busqueda
-    // MARK: SearchBar()
-    func customizeSearchBar () {
-        searchBar.searchBarStyle = UISearchBar.Style.prominent
-        searchBar.placeholder = " Buscar..."
-        searchBar.sizeToFit()
-        searchBar.isTranslucent = false
-        searchBar.backgroundImage = UIImage()
-
-        searchBar.delegate = self
-        let leftNavBarButton = UIBarButtonItem(customView:searchBar)
-        self.navigationItem.leftBarButtonItem = leftNavBarButton
-        self.navigationController?.navigationBar.barTintColor = .init(red: 0.99, green: 0.94, blue: 0.35, alpha: 1.0)
-        
-    }
-    
-    // MARK: subscribeToObserver() :HistoricalSearches
-    func subscribeToObserver (_ subject: PublishSubject<[ProductSearched]>) {
-        subject.subscribe(
-            onNext: {(arraySearchedProducts) in
-                self.searchedProducts = arraySearchedProducts
-                self.tableView.reloadData()
-        },
-            onError: {(error) in
-                print(error)
-        }).disposed(by: disposeBag)
-    }
-    
-    // MARK: subscribeToObserver() :SearchResult
-    func subscribeToObserver (_ subject: PublishSubject<ProductResult>) {
-        subject.subscribe(
-            onNext: {(results) in
-                if let navigationController = self.navigationController {
-                    self.spinner.willMove(toParent: nil)
-                    self.spinner.view.removeFromSuperview()
-                    self.spinner.removeFromParent()
-                    self.homePresenter.showSearchedResults(products: results.results, title: results.query, navigationController: navigationController)
-                }
-        },
-            onError: {(error) in
-                print(error)
-        }).disposed(by: disposeBag)
     }
     
     // MARK: TableView Functions
@@ -95,6 +59,7 @@ class HomeView: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        self.tableView.separatorStyle = .none
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "searchedProductCell") as! SearchedProductsView
         cell.titleLabel.text = searchedProducts[indexPath.row].title
         return cell
@@ -102,7 +67,8 @@ class HomeView: UITableViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if self.searchedProducts.count > 0 {
-            let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
+            let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 40))
+            headerView.backgroundColor =  UIColor(hexString: "#E9E9E9")
             let label = UILabel()
             label.frame = CGRect.init(x: 10, y: 5, width: headerView.frame.width-10, height: headerView.frame.height-10)
             label.font = label.font.withSize(14)
@@ -117,23 +83,80 @@ class HomeView: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if self.searchedProducts.count > 0 {
-            return 50
+            return 40
         }
         return 0
     }
     
+    // make search of product selected, searched before
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let searchedText = searchedProducts[indexPath.row].title else { return }
+        // observer para productos
+        subscribeToObserver(self.homePresenter.presenterToViewProductFromApiSubject)
         self.homePresenter.searchProduct(product: searchedText)
+        addChild(spinner)
+        spinner.view.frame = view.frame
+        view.addSubview(spinner.view)
+        spinner.didMove(toParent: self)
     }
     
 }
+// MARK: Rx Observers
+extension HomeView {
+    // subscribeToObserver() :HistoricalSearches
+    // onNext: show previous searches
+    // onError: navigate to error view
+    func subscribeToObserver (_ subject: PublishSubject<[ProductSearched]>) {
+        subject.subscribe(
+            onNext: {(arraySearchedProducts) in
+                self.spinner.removeSpinner()
+                self.searchedProducts = arraySearchedProducts
+                self.tableView.reloadData()
+        },
+            onError: {(error) in
+                self.spinner.removeSpinner()
+        }).disposed(by: disposeBag)
+    }
+    
+    // subscribeToObserver() :SearchResult
+    // onNext: show results of current search
+    // onError: navigate to error view
+    func subscribeToObserver (_ subject: PublishSubject<ProductResult>) {
+        subject.materialize()
+        .subscribe(
+            onNext: {(result) in
+                self.spinner.removeSpinner()
+        },
+            onError: {(error) in
+                self.spinner.removeSpinner()
+        },
+            onCompleted: {() in
+                print("complete")
+        }).disposed(by: disposeBag)
+    }
+}
 
-
+// MARK: SearchBar()
 extension HomeView: UISearchBarDelegate {
+    // se agrega la barra de busqueda
+    func customizeSearchBar () {
+        searchBar.searchBarStyle = UISearchBar.Style.prominent
+        searchBar.placeholder = " Buscar..."
+        searchBar.sizeToFit()
+        searchBar.isTranslucent = false
+        searchBar.backgroundImage = UIImage()
+        
+        searchBar.delegate = self
+        let leftNavBarButton = UIBarButtonItem(customView:searchBar)
+        self.navigationItem.leftBarButtonItem = leftNavBarButton
+        self.navigationController?.navigationBar.barTintColor = .init(UIColor(hexString: "#fddc00"))
+    }
+    // actions for clicking "search" button
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let searchBarText = searchBar.text {
             self.haveSearched = true
+            // observer para productos
+            subscribeToObserver(self.homePresenter.presenterToViewProductFromApiSubject)
             searchBar.resignFirstResponder()
             self.homePresenter.searchProduct(product: searchBarText)
             addChild(spinner)

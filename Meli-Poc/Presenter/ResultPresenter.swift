@@ -11,27 +11,36 @@ import RxSwift
 import networkLayer
 
 class ResultPresenter {
-    private var meliAPIURL: String = ""
-    var presenterProductDetailSubject = PublishSubject<ProductDetail>()
-    let httpClient = HttpClient.shared
+    var presenterToViewProductDetailSubject = PublishSubject<ProductDetail>()
+    
+    let resultInteractor = ResultInteractor()
+    let homeRouter = HomeRouter.shared
+    // disposeBag for RxSwift
+    let disposeBag = DisposeBag()
     
     init() {
-        self.meliAPIURL = Bundle.main.infoDictionary?["MELI_API_ENDPOINT"] as! String
+        subscribeToObserver(self.resultInteractor.interactorToPresenterProductDetailSubject)
     }
     
     func getProductDetail(productId: String) {
-        httpClient.callGet(
-            serviceUrl: "\(meliAPIURL)/items/\(productId)",
-            success: { (product: ProductDetail, response: HttpResponse?) in
-                self.presenterProductDetailSubject.onNext(product)
-        },
-            failure: { (error: Error, response: HttpResponse?) in
-                print(error)
-                self.presenterProductDetailSubject.onError(error)
-        })
+        resultInteractor.fetchProductDetail(productId: productId)
     }
     
-    func showProductDetail(product: ProductDetail, navigationController: UINavigationController) {
-        navigationController.pushViewController(ResultDetailView(product: product), animated: false)
+    func showProductDetail(product: ProductDetail) {
+        homeRouter.navigateToProductDetail(product: product)
+    }
+}
+
+extension ResultPresenter {
+    func subscribeToObserver (_ subject: PublishSubject<ProductDetail>) {
+        subject.subscribe(
+            onNext: {(productDetail) in
+                self.presenterToViewProductDetailSubject.onNext(productDetail)
+                self.showProductDetail(product: productDetail)
+        },
+            onError: {(error) in
+                self.presenterToViewProductDetailSubject.onError(error)
+                self.homeRouter.navigateToErrorView(error: error)
+        }).disposed(by: disposeBag)
     }
 }

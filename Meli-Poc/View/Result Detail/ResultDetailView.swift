@@ -36,14 +36,26 @@ class ResultDetailView: UIViewController {
         
         fillingCarousel()
         fillingView()
+        settingPageControl()
         scrollView.delegate = self
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let backItem = UIBarButtonItem()
+        backItem.title = ""
+        navigationItem.backBarButtonItem = backItem
+    }
+    
+    // MARK: PageControl
+    func settingPageControl() {
         pageControl.numberOfPages = product.pictures.count
         pageControl.currentPage = 0
         pageControl.pageIndicatorTintColor = .lightGray
         pageControl.currentPageIndicatorTintColor = .darkGray
         view.bringSubviewToFront(pageControl)
     }
-    
+    // MARK: ScrollView
     func setupSlideScrollView(slides : [UIImage]) {
         scrollView.contentSize = CGSize(width: view.frame.width * CGFloat(slides.count), height: scrollView.contentSize.height)
         scrollView.isPagingEnabled = true
@@ -59,7 +71,7 @@ class ResultDetailView: UIViewController {
 
         }
     }
-    
+    // MARK: get async images
     func fillingCarousel () {
         
         for image in product.pictures {
@@ -87,15 +99,15 @@ class ResultDetailView: UIViewController {
         }
 
     }
-        
+    // MARK: Other labels in View
     func fillingView () {
         self.productTitle.text = product.title
         
         switch product.condition {
         case "used":
-            self.productCondition.text = "USADO"
+            self.productCondition.text = "Usado"
         case "new":
-            self.productCondition.text = "NUEVO"
+            self.productCondition.text = "Nuevo"
         default:
             self.productCondition.isHidden = true
         }
@@ -118,6 +130,7 @@ class ResultDetailView: UIViewController {
 
 
 extension ResultDetailView: UIScrollViewDelegate {
+    // just for set the pagecontrol in the actual image of carousel
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let pageIndex = round(scrollView.contentOffset.x/view.frame.width)
         pageControl.currentPage = Int(pageIndex)

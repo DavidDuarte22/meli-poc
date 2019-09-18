@@ -29,6 +29,8 @@
 		0322DDAC23296B6100B694CF /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0322DDAB23296B6100B694CF /* UITableView.swift */; };
 		0322DDAF23296D1D00B694CF /* SpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0322DDAE23296D1D00B694CF /* SpinnerViewController.swift */; };
 		0322DDB1232988FA00B694CF /* ResultPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0322DDB0232988FA00B694CF /* ResultPresenter.swift */; };
+		0322DDB6232C208800B694CF /* ReachabilityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0322DDB5232C208800B694CF /* ReachabilityController.swift */; };
+		0322DDB8232C2D5A00B694CF /* CustomErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0322DDB7232C2D5A00B694CF /* CustomErrors.swift */; };
 		03C7DBBF232066FB00B7EF47 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C7DBBE232066FB00B7EF47 /* AppDelegate.swift */; };
 		03C7DBC4232066FB00B7EF47 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03C7DBC2232066FB00B7EF47 /* Main.storyboard */; };
 		03C7DBC6232066FE00B7EF47 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03C7DBC5232066FE00B7EF47 /* Assets.xcassets */; };
@@ -37,6 +39,12 @@
 		03C7DBE423206AE800B7EF47 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 03C7DBE323206AE800B7EF47 /* Podfile */; };
 		03C7DBE62320781D00B7EF47 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C7DBE52320781D00B7EF47 /* HomeView.swift */; };
 		03C7DBE82320799900B7EF47 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C7DBE72320799900B7EF47 /* HomePresenter.swift */; };
+		03F73ECD232E882B00B6FF4B /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F73ECC232E882B00B6FF4B /* UIColor.swift */; };
+		03F73ECF232FE19300B6FF4B /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F73ECE232FE19300B6FF4B /* ErrorView.swift */; };
+		03F73ED1232FE19E00B6FF4B /* ErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03F73ED0232FE19E00B6FF4B /* ErrorView.xib */; };
+		03F73EDC23315A2A00B6FF4B /* HomeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F73EDB23315A2A00B6FF4B /* HomeInteractor.swift */; };
+		03F73EDF23319F0C00B6FF4B /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F73EDE23319F0C00B6FF4B /* HomeRouter.swift */; };
+		03F73EE12331AB8F00B6FF4B /* ResultInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F73EE02331AB8F00B6FF4B /* ResultInteractor.swift */; };
 		A0AB1822639FF665B6355CD2 /* Pods_Meli_Poc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFA06D65DC57F50B35884991 /* Pods_Meli_Poc.framework */; };
 		EEAA2DC89EEFE2D57A3F3B24 /* Pods_Meli_PocTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9559706EDC570E61BDA93274 /* Pods_Meli_PocTests.framework */; };
 /* End PBXBuildFile section */
@@ -74,6 +82,8 @@
 		0322DDAB23296B6100B694CF /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		0322DDAE23296D1D00B694CF /* SpinnerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
 		0322DDB0232988FA00B694CF /* ResultPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultPresenter.swift; sourceTree = "<group>"; };
+		0322DDB5232C208800B694CF /* ReachabilityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityController.swift; sourceTree = "<group>"; };
+		0322DDB7232C2D5A00B694CF /* CustomErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomErrors.swift; sourceTree = "<group>"; };
 		03C7DBBB232066FB00B7EF47 /* Meli-Poc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Meli-Poc.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C7DBBE232066FB00B7EF47 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		03C7DBC3232066FB00B7EF47 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -86,6 +96,12 @@
 		03C7DBE323206AE800B7EF47 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		03C7DBE52320781D00B7EF47 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		03C7DBE72320799900B7EF47 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
+		03F73ECC232E882B00B6FF4B /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		03F73ECE232FE19300B6FF4B /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ErrorView.swift; path = ../ErrorView.swift; sourceTree = "<group>"; };
+		03F73ED0232FE19E00B6FF4B /* ErrorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ErrorView.xib; path = ../ErrorView.xib; sourceTree = "<group>"; };
+		03F73EDB23315A2A00B6FF4B /* HomeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInteractor.swift; sourceTree = "<group>"; };
+		03F73EDE23319F0C00B6FF4B /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
+		03F73EE02331AB8F00B6FF4B /* ResultInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultInteractor.swift; sourceTree = "<group>"; };
 		195CF45D18D5DB6F696C9FB2 /* Pods-Meli-PocTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Meli-PocTests.release.xcconfig"; path = "Target Support Files/Pods-Meli-PocTests/Pods-Meli-PocTests.release.xcconfig"; sourceTree = "<group>"; };
 		9559706EDC570E61BDA93274 /* Pods_Meli_PocTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Meli_PocTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFA06D65DC57F50B35884991 /* Pods_Meli_Poc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Meli_Poc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,6 +163,7 @@
 			children = (
 				0322DD8423269C9700B694CF /* UIImage.swift */,
 				0322DDAB23296B6100B694CF /* UITableView.swift */,
+				03F73ECC232E882B00B6FF4B /* UIColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -182,7 +199,9 @@
 		0322DDAD23296D0400B694CF /* Commons */ = {
 			isa = PBXGroup;
 			children = (
+				0322DDB7232C2D5A00B694CF /* CustomErrors.swift */,
 				0322DDAE23296D1D00B694CF /* SpinnerViewController.swift */,
+				0322DDB5232C208800B694CF /* ReachabilityController.swift */,
 				0322DDA22326C98300B694CF /* Data */,
 				0322DD8323269C8A00B694CF /* Extensions */,
 			);
@@ -240,6 +259,8 @@
 			isa = PBXGroup;
 			children = (
 				0322DDAD23296D0400B694CF /* Commons */,
+				03F73EDD23319EFE00B6FF4B /* Router */,
+				03F73EDA23315A1B00B6FF4B /* Interactor */,
 				03C7DBE02320682F00B7EF47 /* Model */,
 				03C7DBDF2320682B00B7EF47 /* Presenter */,
 				03C7DBDE232067F100B7EF47 /* View */,
@@ -268,6 +289,7 @@
 				0322DD7B2326841500B694CF /* Home */,
 				0322DD7C2326842100B694CF /* Result */,
 				0322DD882326B26D00B694CF /* Result Detail */,
+				03F73ED3232FE1C300B6FF4B /* Common Views */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -290,6 +312,32 @@
 				0322DD812326995300B694CF /* Currency.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		03F73ED3232FE1C300B6FF4B /* Common Views */ = {
+			isa = PBXGroup;
+			children = (
+				03F73ECE232FE19300B6FF4B /* ErrorView.swift */,
+				03F73ED0232FE19E00B6FF4B /* ErrorView.xib */,
+			);
+			path = "Common Views";
+			sourceTree = "<group>";
+		};
+		03F73EDA23315A1B00B6FF4B /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				03F73EDB23315A2A00B6FF4B /* HomeInteractor.swift */,
+				03F73EE02331AB8F00B6FF4B /* ResultInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		03F73EDD23319EFE00B6FF4B /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				03F73EDE23319F0C00B6FF4B /* HomeRouter.swift */,
+			);
+			path = Router;
 			sourceTree = "<group>";
 		};
 		A4C5ED1F0F514CE178260820 /* Frameworks */ = {
@@ -399,6 +447,7 @@
 				0322DD8A2326B28200B694CF /* ResultDetailView.xib in Resources */,
 				03C7DBC9232066FE00B7EF47 /* LaunchScreen.storyboard in Resources */,
 				03C7DBC6232066FE00B7EF47 /* Assets.xcassets in Resources */,
+				03F73ED1232FE19E00B6FF4B /* ErrorView.xib in Resources */,
 				03C7DBE423206AE800B7EF47 /* Podfile in Resources */,
 				03C7DBC4232066FB00B7EF47 /* Main.storyboard in Resources */,
 				0322DD7823267F5F00B694CF /* ResultCell.xib in Resources */,
@@ -488,24 +537,31 @@
 				0322DD8523269C9700B694CF /* UIImage.swift in Sources */,
 				03C7DBE82320799900B7EF47 /* HomePresenter.swift in Sources */,
 				0322DD952326C65300B694CF /* SearchedProductsView.swift in Sources */,
+				03F73EDF23319F0C00B6FF4B /* HomeRouter.swift in Sources */,
+				0322DDB6232C208800B694CF /* ReachabilityController.swift in Sources */,
 				03C7DBE62320781D00B7EF47 /* HomeView.swift in Sources */,
 				0322DD9F2326C97800B694CF /* Product+CoreDataClass.swift in Sources */,
 				0322DD912326BDA700B694CF /* SellerAddress.swift in Sources */,
 				0322DD6F23246B4700B694CF /* Product.swift in Sources */,
+				03F73EE12331AB8F00B6FF4B /* ResultInteractor.swift in Sources */,
 				0322DD7423247DB600B694CF /* Shipping.swift in Sources */,
 				0322DDB1232988FA00B694CF /* ResultPresenter.swift in Sources */,
+				03F73ECF232FE19300B6FF4B /* ErrorView.swift in Sources */,
 				0322DD7A2326811B00B694CF /* ResultCell.swift in Sources */,
 				0322DD8D2326BC5700B694CF /* ProductDetail.swift in Sources */,
 				0322DD822326995300B694CF /* Currency.swift in Sources */,
 				03C7DBBF232066FB00B7EF47 /* AppDelegate.swift in Sources */,
 				0322DD7623267CA900B694CF /* ResultsTableView.swift in Sources */,
+				0322DDB8232C2D5A00B694CF /* CustomErrors.swift in Sources */,
 				0322DDA12326C97B00B694CF /* Product+CoreDataProperties.swift in Sources */,
 				0322DD872326AD9800B694CF /* ResultDetailView.swift in Sources */,
+				03F73ECD232E882B00B6FF4B /* UIColor.swift in Sources */,
 				0322DD8F2326BD3F00B694CF /* Pictures.swift in Sources */,
 				0322DDAC23296B6100B694CF /* UITableView.swift in Sources */,
 				0322DD982326C86500B694CF /* ProductSearched.xcdatamodeld in Sources */,
 				0322DDAF23296D1D00B694CF /* SpinnerViewController.swift in Sources */,
 				0322DD6C2322F3A900B694CF /* Category.swift in Sources */,
+				03F73EDC23315A2A00B6FF4B /* HomeInteractor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

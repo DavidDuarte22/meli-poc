@@ -19,9 +19,16 @@ class ResultsTableView: UITableViewController {
     let spinner = SpinnerViewController()
 
     override func viewDidLoad() {
-        subscribeToObserver(self.resultPresenter.presenterProductDetailSubject)
+        subscribeToObserver(self.resultPresenter.presenterToViewProductDetailSubject)
         self.tableView.register(UINib(nibName: "ResultCell", bundle: nil), forCellReuseIdentifier: "resultCell")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         self.navigationItem.title = query
+        let backItem = UIBarButtonItem()
+        backItem.title = ""
+        navigationItem.backBarButtonItem = backItem
+        
     }
     
     required init(results: [Product], query: String) {
@@ -38,15 +45,10 @@ class ResultsTableView: UITableViewController {
     func subscribeToObserver (_ subject: PublishSubject<ProductDetail>) {
         subject.subscribe(
             onNext: {(productDetail) in
-                if let navigationController = self.navigationController {
-                    self.spinner.willMove(toParent: nil)
-                    self.spinner.view.removeFromSuperview()
-                    self.spinner.removeFromParent()
-                    self.resultPresenter.showProductDetail(product: productDetail, navigationController: navigationController)
-                }
+                self.spinner.removeSpinner()
         },
             onError: {(error) in
-                print(error)
+                self.spinner.removeSpinner()
         }).disposed(by: disposeBag)
     }
     
@@ -54,6 +56,7 @@ class ResultsTableView: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "resultCell") as! ResultCell
         cell.titleLabel.text = results[indexPath.row].title
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         if results[indexPath.row].shipping.free_shipping {
             cell.dispatchLabel.text = "Envío gratis!"
         } else {
@@ -79,5 +82,9 @@ class ResultsTableView: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         resultPresenter.getProductDetail(productId: results[indexPath.row].id)
+        addChild(spinner)
+        spinner.view.frame = view.frame
+        view.addSubview(spinner.view)
+        spinner.didMove(toParent: self)
     }
 }
