@@ -28,10 +28,11 @@ class ResultInteractor {
 }
 
 extension ResultInteractor: ResultInteractorInterface {
+    // navigate to product detail view
     func navigateToProductDetail(product: ProductDetail) {
         homeRouter.navigateToProductDetail(product: product)
     }
-    
+    // Get product detail from MELI API
     func fetchProductDetail(productId: String) {
         httpClient.callGet(
             serviceUrl: "\(meliAPIURL)/items/\(productId)",

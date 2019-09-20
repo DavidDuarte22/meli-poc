@@ -29,9 +29,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        let homeRouter = HomeRouter.shared
-        let homeInteractor = HomeInteractor()
-        let homePresenter = HomePresenter(interactor: homeInteractor, router: homeRouter)
+        let homeRouter: HomeRouterInterface = HomeRouter.shared
+        let dataManager = LocalStorageManager()
+        let homeInteractor: HomeInteractorInterface = HomeInteractor(dataManager: dataManager)
+        let homePresenter: HomePresenterInterface = HomePresenter(interactor: homeInteractor, router: homeRouter)
         window?.rootViewController = homeRouter.setRootView(rootViewController: HomeView(presenter: homePresenter))
         window?.makeKeyAndVisible()
         // Override point for customization after application launch.

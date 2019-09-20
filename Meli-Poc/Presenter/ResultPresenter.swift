@@ -32,16 +32,18 @@ class ResultPresenter {
 }
 
 extension ResultPresenter: ResultPresenterInterface {
+    // MARK: get product detail
     func getProductDetail(productId: String) {
         resultInteractor.fetchProductDetail(productId: productId)
     }
-    
+    // MARK: show product detail
     func showProductDetail(product: ProductDetail) {
         homeRouter.navigateToProductDetail(product: product)
     }
 }
 
 extension ResultPresenter {
+    // subscribe to observer whose will get the product detail
     func subscribeToObserver (_ subject: PublishSubject<ProductDetail>) {
         subject.subscribe(
             onNext: {(productDetail) in

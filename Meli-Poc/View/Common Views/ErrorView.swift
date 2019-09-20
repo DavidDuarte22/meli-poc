@@ -40,7 +40,7 @@ class ErrorView: UIViewController {
         case MeliError.networkError:
             errorImage.image = UIImage(named: "connection_error")
         default:
-            errorImage.image = UIImage(named: "")
+            errorImage.image = UIImage(named: "default_error")
         }
     }
     

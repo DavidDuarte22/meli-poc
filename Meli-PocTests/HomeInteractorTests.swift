@@ -33,32 +33,32 @@ class HomeInteractorTests: XCTestCase {
     
 }
 
-extension HomeInteractorTests: HomeInteractorInterface {
-    func fetchRecentSearches() {
-        <#code#>
-    }
-    
-    func fetchProductFromApi(productForSearch product: String, siteId: String) {
-        <#code#>
-    }
-    
-    var interactorToPresenterSearchedProductSubject: PublishSubject<[ProductSearched]> {
-        get {
-            <#code#>
-        }
-        set(newValue) {
-            <#code#>
-        }
-    }
-    
-    var interactorToPresenterProductFromApiSubject: PublishSubject<ProductResult> {
-        get {
-            <#code#>
-        }
-        set(newValue) {
-            <#code#>
-        }
-    }
-    
-    
-}
+//extension HomeInteractorTests: HomeInteractorInterface {
+//    func fetchRecentSearches() {
+//        <#code#>
+//    }
+//    
+//    func fetchProductFromApi(productForSearch product: String, siteId: String) {
+//        <#code#>
+//    }
+//    
+//    var interactorToPresenterSearchedProductSubject: PublishSubject<[ProductSearched]> {
+//        get {
+//            <#code#>
+//        }
+//        set(newValue) {
+//            <#code#>
+//        }
+//    }
+//    
+//    var interactorToPresenterProductFromApiSubject: PublishSubject<ProductResult> {
+//        get {
+//            <#code#>
+//        }
+//        set(newValue) {
+//            <#code#>
+//        }
+//    }
+//    
+//    
+//}

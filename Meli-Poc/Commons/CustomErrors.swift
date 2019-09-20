@@ -25,7 +25,7 @@ struct ErrorStruct {
         self.type = errorType
     }
 }
-
+// wrapping error in custom msg
 class ErrorHandler {
     func tableError(error: Error) -> ErrorStruct {
         if case is MeliError = error {

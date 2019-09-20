@@ -27,7 +27,7 @@ class HomeInteractor {
     var dataStorage: LocalStorageManager
     
     var searchedProducts: [ProductSearched]?
-    
+    // instances of observables
     var interactorToPresenterSearchedProductSubject = PublishSubject<[ProductSearched]>()
     var interactorToPresenterProductFromApiSubject = PublishSubject<ProductResult>()
     var interactorToPresenterErrorSubject = PublishSubject<Error>()
@@ -36,6 +36,8 @@ class HomeInteractor {
         self.dataStorage = dataManager
         self.meliAPIURL = Bundle.main.infoDictionary?["MELI_API_ENDPOINT"] as! String
     }
+    // MARK: Network middleware
+    // if the user don't have internet connection, return an error. It's unuseless to send the request
     func networkMiddleware() -> (availableNetwork: Bool, error: Error?) {
         do {
             let _ = try ReachabilityController().checkReachable()
@@ -53,6 +55,7 @@ class HomeInteractor {
 }
 
 extension HomeInteractor: HomeInteractorInterface {
+    // MARK: get resent products searched from CoreData
     func fetchRecentSearches() {
         do {
             try self.searchedProducts = dataStorage.fetchRecentSearches()
@@ -62,7 +65,7 @@ extension HomeInteractor: HomeInteractorInterface {
             self.interactorToPresenterSearchedProductSubject.onError(error)
         }
     }
-    
+    // MARK: get products from MELI API
     func fetchProductFromApi(productForSearch product: String, siteId: String = "MLA") {
         if let error = networkMiddleware().error {
             self.interactorToPresenterErrorSubject.onNext(error)

@@ -8,6 +8,7 @@
 
 import UIKit
 
+// extension for downloading async images
 extension UIImageView {
     func load(url: URL) {
         DispatchQueue.global().async { [weak self] in

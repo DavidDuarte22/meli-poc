@@ -9,6 +9,8 @@
 import SystemConfiguration
 import Foundation
 
+// Reachability network class.
+// We'll use as a middleware before all http request to provide an earlier response to the user if it isn't connect
 class ReachabilityController {
     private let reachability = SCNetworkReachabilityCreateWithName(nil, Bundle.main.infoDictionary?["MELI_API_ENDPOINT"] as! String)
     

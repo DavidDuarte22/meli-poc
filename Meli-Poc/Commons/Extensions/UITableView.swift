@@ -8,6 +8,7 @@
 
 import UIKit
 
+// extension for show an empty view if we get an error or if we couldn't get results
 extension UITableView {
     func setEmptyView(title: String, message: String) {
         let emptyView = UIView(frame: CGRect(x: self.center.x, y: self.center.y, width: self.bounds.size.width, height: self.bounds.size.height))

@@ -44,10 +44,11 @@ class HomePresenter {
 }
 
 extension HomePresenter: HomePresenterInterface {
+    // demand recent searches to interactor
     func getRecentSearches() {
         self.homeInteractor.fetchRecentSearches()
     }
-    
+    // demand product to interactor
     func searchProducts(product: String, siteId: String = "MLA") {
         self.homeInteractor.fetchProductFromApi(productForSearch: product, siteId: siteId)
     }
@@ -56,6 +57,7 @@ extension HomePresenter: HomePresenterInterface {
 }
 
 extension HomePresenter {
+    // subscribe to searched products observable
     func subscribeToObserver (_ subject: PublishSubject<[ProductSearched]>) {
         subject.subscribe(
             onNext: {(arraySearchedProducts) in
@@ -67,7 +69,7 @@ extension HomePresenter {
                 self.homeRouter.navigateToErrorView(error: error)
         }).disposed(by: disposeBag)
     }
-    
+    // subscribe to recent product searched observer
     func subscribeToObserver (_ subject: PublishSubject<ProductResult>) {
         subject.materialize()
             .subscribe(

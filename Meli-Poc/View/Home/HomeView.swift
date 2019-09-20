@@ -111,7 +111,7 @@ class HomeView: UITableViewController {
 extension HomeView {
     // subscribeToObserver() :HistoricalSearches
     // onNext: show previous searches
-    // onError: navigate to error view
+    // onError: navigate to error view if critical error
     func subscribeToObserver (_ subject: PublishSubject<[ProductSearched]>) {
         subject.subscribe(
             onNext: {(arraySearchedProducts) in
@@ -126,7 +126,7 @@ extension HomeView {
     
     // subscribeToObserver() :SearchResult
     // onNext: show results of current search
-    // onError: navigate to error view
+    // onError: navigate to error view if critical error
     func subscribeToObserver (_ subject: PublishSubject<ProductResult>) {
         subject.materialize()
         .subscribe(

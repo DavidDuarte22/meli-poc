@@ -23,6 +23,7 @@ class ResultCell: UITableViewCell {
         super.layoutIfNeeded()
         
         if let productURLImage = productURLImage {
+            // while we get the image set a provisional image
             self.productImageView.image = UIImage(named: "empty_image")
             let queue = OperationQueue()
             queue.addOperation {() -> Void in

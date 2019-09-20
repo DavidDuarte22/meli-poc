@@ -11,6 +11,7 @@ import SystemConfiguration
 import CoreData
 import UIKit
 
+// Local storage for save recent searches
 class LocalStorageManager {
     
     let persistentContainer: NSPersistentContainer!
@@ -30,7 +31,7 @@ class LocalStorageManager {
     lazy var backgroundContext: NSManagedObjectContext = {
         return self.persistentContainer.viewContext
     }()
-    
+    // MARK: get recent searches
     func fetchRecentSearches() throws -> [ProductSearched]? {
         do {
             let search: [ProductSearched] = try persistentContainer.viewContext.fetch(ProductSearched.fetchRequest())
@@ -40,7 +41,7 @@ class LocalStorageManager {
            throw error
         }
     }
-    
+    // MARK: add searched product
     func addSearchedProduct(product: String){
         let productSearched = ProductSearched(entity: ProductSearched.entity(), insertInto: self.persistentContainer.viewContext)
         productSearched.title = product

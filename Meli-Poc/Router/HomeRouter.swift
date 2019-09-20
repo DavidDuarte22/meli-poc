@@ -17,6 +17,7 @@ protocol HomeRouterInterface: class {
 }
 
 class HomeRouter {
+    // private init for singleton router
     public static let shared = HomeRouter()
     private var navigationController = UINavigationController()
     
@@ -41,11 +42,12 @@ extension HomeRouter: HomeRouterInterface {
         navigationController.pushViewController(ResultsTableView(results: products, query: title, presenter: resultPresenter), animated: false)
     }
     
-    
+    // Navigate to product detail
     func navigateToProductDetail(product: ProductDetail) {
         navigationController.pushViewController(ResultDetailView(product: product), animated: false)
     }
     
+    // Navigate to error view
     func navigateToErrorView(error: Error) {
         let meliError = ErrorHandler().tableError(error: error)
         let errorView = ErrorView(error: meliError)
