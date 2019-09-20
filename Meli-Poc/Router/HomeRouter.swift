@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol HomeRouterInterface {
+protocol HomeRouterInterface: class {
     func navigateToSearchedResults(products: [Product], title: String)
     func setRootView(rootViewController: UITableViewController) -> UINavigationController
     func navigateToProductDetail(product: ProductDetail)
@@ -34,7 +34,11 @@ extension HomeRouter: HomeRouterInterface {
     
     // Navigate to ResultsTable with results of search
     func navigateToSearchedResults(products: [Product], title: String) {
-        navigationController.pushViewController(ResultsTableView(results: products, query: title), animated: false)
+        // implementar e instanciar router de Result
+        let resultInteractor = ResultInteractor()
+        let resultRouter = HomeRouter.shared
+        let resultPresenter: ResultPresenterInterface = ResultPresenter(interactor: resultInteractor, router: resultRouter)
+        navigationController.pushViewController(ResultsTableView(results: products, query: title, presenter: resultPresenter), animated: false)
     }
     
     

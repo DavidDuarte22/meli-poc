@@ -13,11 +13,22 @@ class ResultsTableView: UITableViewController {
     var results: [Product]
     var query: String
     
-    var resultPresenter = ResultPresenter()
+    var resultPresenter: ResultPresenterInterface
     let disposeBag = DisposeBag()
     
     let spinner = SpinnerViewController()
-
+    
+    init(results: [Product], query: String, presenter: ResultPresenterInterface) {
+        self.resultPresenter = presenter
+        self.results = results
+        self.query = query
+        super.init(style: .plain)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         subscribeToObserver(self.resultPresenter.presenterToViewProductDetailSubject)
         self.tableView.register(UINib(nibName: "ResultCell", bundle: nil), forCellReuseIdentifier: "resultCell")
@@ -29,16 +40,6 @@ class ResultsTableView: UITableViewController {
         backItem.title = ""
         navigationItem.backBarButtonItem = backItem
         
-    }
-    
-    required init(results: [Product], query: String) {
-        self.results = results
-        self.query = query
-        super.init(style: .plain)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: subscribeToObserver() :GetProductDetail

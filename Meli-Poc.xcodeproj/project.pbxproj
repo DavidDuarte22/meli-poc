@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0301B21F2333B5BC00B079CB /* HomePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0301B21E2333B5BC00B079CB /* HomePresenterTests.swift */; };
 		0322DD6C2322F3A900B694CF /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0322DD6B2322F3A900B694CF /* Category.swift */; };
 		0322DD6F23246B4700B694CF /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0322DD6E23246B4700B694CF /* Product.swift */; };
 		0322DD7223246BDD00B694CF /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0322DD7123246BDD00B694CF /* Address.swift */; };
@@ -64,6 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0301B21E2333B5BC00B079CB /* HomePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenterTests.swift; sourceTree = "<group>"; };
 		0322DD6B2322F3A900B694CF /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		0322DD6E23246B4700B694CF /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		0322DD7123246BDD00B694CF /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 				03C7DBD5232066FF00B7EF47 /* Info.plist */,
 				03FEEEFE2332739900BCAC21 /* HomeInteractorTests.swift */,
 				03FEEF0523329C0700BCAC21 /* CoreDataTests.swift */,
+				0301B21E2333B5BC00B079CB /* HomePresenterTests.swift */,
 			);
 			path = "Meli-PocTests";
 			sourceTree = "<group>";
@@ -583,6 +586,7 @@
 				03FEEF0623329C0700BCAC21 /* CoreDataTests.swift in Sources */,
 				03C7DBD4232066FF00B7EF47 /* Meli_PocTests.swift in Sources */,
 				03FEEEFF2332739900BCAC21 /* HomeInteractorTests.swift in Sources */,
+				0301B21F2333B5BC00B079CB /* HomePresenterTests.swift in Sources */,
 				03FEEF00233276F000BCAC21 /* ProductSearched.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

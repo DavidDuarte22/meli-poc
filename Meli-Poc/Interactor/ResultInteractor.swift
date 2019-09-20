@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import networkLayer
 
-protocol ResultInteractorInterface {
+protocol ResultInteractorInterface: class {
     func fetchProductDetail(productId: String)
     func navigateToProductDetail(product: ProductDetail)
     var interactorToPresenterProductDetailSubject: PublishSubject<ProductDetail> { get set }

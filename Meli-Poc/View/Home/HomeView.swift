@@ -11,7 +11,7 @@ import RxSwift
 
 class HomeView: UITableViewController {
     // instances of presenter
-    var homePresenter = HomePresenter()
+    var homePresenter: HomePresenterInterface
     // disposeBag for RxSwift
     let disposeBag = DisposeBag()
     // const and instances for searching flow
@@ -21,6 +21,15 @@ class HomeView: UITableViewController {
     
     let spinner = SpinnerViewController()
 
+    init(presenter: HomePresenterInterface) {
+        self.homePresenter = presenter
+        super.init(style: UITableView.Style.plain)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.register(UINib(nibName: "SearchedProductsView", bundle: nil), forCellReuseIdentifier: "searchedProductCell")

@@ -12,7 +12,7 @@ import RxSwift
 import networkLayer
 import SystemConfiguration
 
-protocol HomeInteractorInterface {
+protocol HomeInteractorInterface: class {
     func fetchRecentSearches()
     func fetchProductFromApi(productForSearch product: String, siteId: String)
     var interactorToPresenterSearchedProductSubject: PublishSubject <[ProductSearched]> { get set }
@@ -24,7 +24,7 @@ class HomeInteractor {
     private var meliAPIURL: String = ""
     private let httpClient = HttpClient.shared
     
-    var dataManager = LocalStorageManager()
+    var dataStorage: LocalStorageManager
     
     var searchedProducts: [ProductSearched]?
     
@@ -32,7 +32,8 @@ class HomeInteractor {
     var interactorToPresenterProductFromApiSubject = PublishSubject<ProductResult>()
     var interactorToPresenterErrorSubject = PublishSubject<Error>()
     
-    init() {
+    init(dataManager: LocalStorageManager) {
+        self.dataStorage = dataManager
         self.meliAPIURL = Bundle.main.infoDictionary?["MELI_API_ENDPOINT"] as! String
     }
     func networkMiddleware() -> (availableNetwork: Bool, error: Error?) {
@@ -54,7 +55,7 @@ class HomeInteractor {
 extension HomeInteractor: HomeInteractorInterface {
     func fetchRecentSearches() {
         do {
-            try self.searchedProducts = dataManager.fetchRecentSearches()
+            try self.searchedProducts = dataStorage.fetchRecentSearches()
             self.interactorToPresenterSearchedProductSubject.onNext(self.searchedProducts ?? [])
         } catch let error as NSError {
             print("Couldn't fetch. \(error), \(error.userInfo)")
@@ -76,7 +77,7 @@ extension HomeInteractor: HomeInteractorInterface {
                 if self.searchedProducts != nil {
                     let results = self.searchedProducts!.filter { $0.title == product }
                     if results.isEmpty {
-                        self.dataManager.addSearchedProduct(product: product)
+                        self.dataStorage.addSearchedProduct(product: product)
                     }
                 }
                 // lanzar evento para acrtualizar la view

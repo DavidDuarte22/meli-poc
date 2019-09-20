@@ -10,11 +10,19 @@ import Foundation
 import UIKit
 import RxSwift
 
-protocol HomePresenterInterface {
+protocol HomePresenterInterface: class {
     func getRecentSearches()
     func searchProducts(product: String, siteId: String)
     var presenterToViewProductFromApiSubject: PublishSubject<ProductResult> { get set }
     var presenterToViewSearchedProductSubject: PublishSubject<[ProductSearched]> { get set }
+}
+
+extension HomePresenterInterface {
+    func searchProducts(
+        product: String,
+        siteId: String = "MLA") {
+        return searchProducts(product: product, siteId: siteId)
+    }
 }
 
 class HomePresenter {
@@ -24,14 +32,15 @@ class HomePresenter {
     // disposeBag for RxSwift
     let disposeBag = DisposeBag()
     
-    private let homeInteractor: HomeInteractorInterface = HomeInteractor()
-    private let homeRouter: HomeRouterInterface = HomeRouter.shared
+    private let homeInteractor: HomeInteractorInterface
+    private let homeRouter: HomeRouterInterface
     
-    init() {
+    init(interactor: HomeInteractorInterface, router: HomeRouterInterface) {
+        homeInteractor = interactor
+        homeRouter = router
         subscribeToObserver(self.homeInteractor.interactorToPresenterSearchedProductSubject)
         subscribeToObserver(self.homeInteractor.interactorToPresenterProductFromApiSubject)
     }
-
 }
 
 extension HomePresenter: HomePresenterInterface {

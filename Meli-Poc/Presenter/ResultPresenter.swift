@@ -13,23 +13,25 @@ import networkLayer
 protocol ResultPresenterInterface {
     func getProductDetail(productId: String)
     func showProductDetail(product: ProductDetail)
-    var presenterToViewProductDetailSubject: PublishSubject<ProductResult> { get set }
+    var presenterToViewProductDetailSubject: PublishSubject<ProductDetail> { get set }
 }
 
 class ResultPresenter {
     var presenterToViewProductDetailSubject = PublishSubject<ProductDetail>()
     
-    let resultInteractor: ResultInteractorInterface = ResultInteractor()
-    let homeRouter = HomeRouter.shared
+    private let resultInteractor: ResultInteractorInterface
+    private let homeRouter: HomeRouterInterface
     // disposeBag for RxSwift
     let disposeBag = DisposeBag()
     
-    init() {
+    init(interactor: ResultInteractorInterface, router: HomeRouterInterface) {
+        resultInteractor = interactor
+        homeRouter = router
         subscribeToObserver(self.resultInteractor.interactorToPresenterProductDetailSubject)
     }
 }
 
-extension ResultPresenter {
+extension ResultPresenter: ResultPresenterInterface {
     func getProductDetail(productId: String) {
         resultInteractor.fetchProductDetail(productId: productId)
     }

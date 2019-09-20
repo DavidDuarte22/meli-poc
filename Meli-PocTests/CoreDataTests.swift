@@ -89,7 +89,7 @@ class CoreDataTests: XCTestCase {
     }
     
     
-    func test_fetch_all_todo() {
+    func testFetchSearches() {
         //Given a storage with two todo
         //When fetch
         
@@ -101,22 +101,6 @@ class CoreDataTests: XCTestCase {
             XCTAssertEqual(results!.count, 5)
         } catch let error as NSError {
             print("Couldn't fetch. \(error), \(error.userInfo)")
-            
         }
-        
     }
-    
-    //    func test_create_todo() {
-    //
-    //        //Given the name & status
-    //        let title = "Macbook pro"
-    //
-    //        //When add todo
-    //        let todo = coreData.addSearchedProduct(product: title)
-    //
-    //        //Assert: return todo item
-    //        XCTAssertNotNil( todo )
-    //
-    //    }
-
 }
