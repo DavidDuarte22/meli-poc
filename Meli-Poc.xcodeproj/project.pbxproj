@@ -37,7 +37,6 @@
 		03C7DBC6232066FE00B7EF47 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03C7DBC5232066FE00B7EF47 /* Assets.xcassets */; };
 		03C7DBC9232066FE00B7EF47 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03C7DBC7232066FE00B7EF47 /* LaunchScreen.storyboard */; };
 		03C7DBD4232066FF00B7EF47 /* Meli_PocTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C7DBD3232066FF00B7EF47 /* Meli_PocTests.swift */; };
-		03C7DBE423206AE800B7EF47 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 03C7DBE323206AE800B7EF47 /* Podfile */; };
 		03C7DBE62320781D00B7EF47 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C7DBE52320781D00B7EF47 /* HomeView.swift */; };
 		03C7DBE82320799900B7EF47 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C7DBE72320799900B7EF47 /* HomePresenter.swift */; };
 		03F73ECD232E882B00B6FF4B /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F73ECC232E882B00B6FF4B /* UIColor.swift */; };
@@ -99,7 +98,6 @@
 		03C7DBCF232066FF00B7EF47 /* Meli-PocTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Meli-PocTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C7DBD3232066FF00B7EF47 /* Meli_PocTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meli_PocTests.swift; sourceTree = "<group>"; };
 		03C7DBD5232066FF00B7EF47 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		03C7DBE323206AE800B7EF47 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		03C7DBE52320781D00B7EF47 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		03C7DBE72320799900B7EF47 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		03F73ECC232E882B00B6FF4B /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -247,7 +245,6 @@
 		03C7DBB2232066FB00B7EF47 = {
 			isa = PBXGroup;
 			children = (
-				03C7DBE323206AE800B7EF47 /* Podfile */,
 				03C7DBBD232066FB00B7EF47 /* Meli-Poc */,
 				03C7DBD2232066FF00B7EF47 /* Meli-PocTests */,
 				03C7DBBC232066FB00B7EF47 /* Products */,
@@ -461,7 +458,6 @@
 				03C7DBC9232066FE00B7EF47 /* LaunchScreen.storyboard in Resources */,
 				03C7DBC6232066FE00B7EF47 /* Assets.xcassets in Resources */,
 				03F73EE62331DF9F00B6FF4B /* ErrorView.xib in Resources */,
-				03C7DBE423206AE800B7EF47 /* Podfile in Resources */,
 				03C7DBC4232066FB00B7EF47 /* Main.storyboard in Resources */,
 				0322DD7823267F5F00B694CF /* ResultCell.xib in Resources */,
 				0322DD932326C63C00B694CF /* SearchedProductsView.xib in Resources */,

@@ -5,8 +5,10 @@ source 'https://github.com/CocoaPods/Specs.git'
 target 'Meli-Poc' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
-  pod 'RxSwift', '4.4.2'
-  pod 'networkLayer', '~> 0.1.2'
+  pod 'RxSwift', '~> 5.0.1'
+  pod 'networkLayer', '~> 0.1.3'
+  
+  #pod 'networkLayer', :path => '/Users/daduarte/Projects/Swift/networkLayer'
   pod 'ReachabilitySwift', '~> 4.3.1'
   # Pods for Meli-Poc
 

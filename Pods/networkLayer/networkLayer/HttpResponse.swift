@@ -10,10 +10,10 @@ import Alamofire
 
 // Clase base para una respuesta http
 public class HttpResponse {
-    public var response: DataResponse<Any>
+    public var response: DataResponse<Any, Error>
     public var httpError: HttpError?
     
-    public init(_ response: DataResponse<Any>){
+    public init(_ response: DataResponse<Any, Error>){
         self.response = response
     }
     

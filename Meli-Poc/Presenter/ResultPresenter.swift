@@ -8,7 +8,6 @@
 
 import Foundation
 import RxSwift
-import networkLayer
 
 protocol ResultPresenterInterface {
     func getProductDetail(productId: String)

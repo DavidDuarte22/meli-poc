@@ -18,7 +18,7 @@ public class HttpClient {
     
     public static let shared = HttpClient() // Singleton de HttpClient, publico para poder acceder
     
-    private let sessionManager = SessionManager() // nos genera una sola instancia del session manager
+    private let sessionManager = Session() // nos genera una sola instancia del session manager
     
     private init() {
         

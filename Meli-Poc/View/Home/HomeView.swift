@@ -35,7 +35,7 @@ class HomeView: UITableViewController {
         self.tableView.register(UINib(nibName: "SearchedProductsView", bundle: nil), forCellReuseIdentifier: "searchedProductCell")
         self.tableView.register(UINib(nibName: "SearchedHeaderView", bundle: nil), forCellReuseIdentifier: "searchedHeaderCell")
         
-        
+        self.tableView.rowHeight = 40
         // observer para productos buscados: Historial
         subscribeToObserver(self.homePresenter.presenterToViewSearchedProductSubject)
         // observer para productos
